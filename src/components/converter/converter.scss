@@ -1,0 +1,31 @@
+@import '../../assets/styles/colors';
+
+.converter {
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
+  padding: 24px;
+
+  background-color: $light-grey;
+
+
+  .title {
+    letter-spacing: normal;
+  }
+
+  .converter-results__wrapper {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 1rem;
+
+    .bold {
+      font-weight: 600;
+    }
+
+    div {
+      height: 2rem;
+    }
+  }
+}

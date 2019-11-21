@@ -1,3 +1,3 @@
-import Form from './form';
+import ConverterForm from './converter-form';
 
-export default Form;
+export default ConverterForm;

@@ -1,38 +1,37 @@
-import React from 'react';
-import Formik from 'formik';
+import React, { useCallback, useState } from 'react';
 
-import { noop } from '../../helpers/common';
+// Components
+import ConverterForm from '../converter-form';
+
+// Helpers
+import { getConvertationResult } from '../../helpers/common';
+
+// Constants
+import { CURRENCIES_LIST } from '../../constants/common';
+
+import './converter.scss';
 
 const Converter = () => {
+  const [result, setResult] = useState(null);
+
+  const handleSubmit = useCallback(async ({ amount, from, to }) => {
+    setResult(await getConvertationResult(from, to, amount));
+  }, []);
+
   return (
-    <div>
-      <Formik
-        initialValues={{ from: '', to: '' }}>
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur
-        }) => (
-          <form onSubmit={noop}>
-            <input
-              type='number'
-              name='from'
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.from} />
-            {errors.from && touched.from && errors.from}
-            <input
-              type='number'
-              name='to'
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.to} />
-            {errors.to && touched.to && errors.to}
-          </form>
+    <div className='pure-g'>
+      <div className='pure-container converter pure-u-xl-1-3 pure-u-md-1-2 pure-u-sm-1 pure-u-1'>
+        <h3 className='title'>Currency converter</h3>
+        <ConverterForm currenciesList={CURRENCIES_LIST} onSubmit={handleSubmit} />
+        {result && (
+          <div className='converter-results__wrapper'>
+            <div>At {result.date}</div>
+            <div className='bold'>{result.amount} {result.from}</div>
+            <div>equal to</div>
+            <div className='bold'>{result.value} {result.to}</div>
+          </div>
         )}
-      </Formik>
+      </div>
     </div>
   );
 };
